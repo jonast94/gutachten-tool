@@ -400,7 +400,7 @@ def generate_pdf(data):
               Spacer(1,2*mm),
               Paragraph(f"Gutachten-Tool Berlin  |  {now}  |  {addr_clean}", foot_s),
               Spacer(1,2*mm),
-              Paragraph("Gutachten-Tool Berlin ist eine Entwicklung von aedvice", foot_s)]
+              Paragraph("Gutachten-Tool Berlin ist eine Entwicklung von aedvice(R)", foot_s)]
 
     doc.build(story)
     buffer.seek(0)

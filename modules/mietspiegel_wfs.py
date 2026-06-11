@@ -107,28 +107,33 @@ def get_wohnlage_from_wfs(latitude: str, longitude: str) -> dict:
     lat = float(latitude)
     lon = float(longitude)
 
-    # kleine Suchbox um den Punkt
-    delta = 0.0008  # ca. wenige Dutzend Meter in Berlin
-
-    params = {
-        "service": "WFS",
-        "version": "2.0.0",
-        "request": "GetFeature",
-        "typeNames": WFS_TYPENAME,
-        "outputFormat": "application/json",
-        "srsName": "EPSG:4326",
-        "bbox": f"{lon - delta},{lat - delta},{lon + delta},{lat + delta},EPSG:4326",
-    }
-
     headers = {
         "User-Agent": "gutachten-tool/1.0"
     }
 
-    response = requests.get(WFS_URL, params=params, headers=headers, timeout=30)
-    response.raise_for_status()
+    # Suchradius schrittweise vergrößern, bis Treffer gefunden werden
+    deltas = [0.0003, 0.0008, 0.0015, 0.003, 0.01]
 
-    data = response.json()
-    features = data.get("features", [])
+    features = []
+    for delta in deltas:
+        params = {
+            "service": "WFS",
+            "version": "2.0.0",
+            "request": "GetFeature",
+            "typeNames": WFS_TYPENAME,
+            "outputFormat": "application/json",
+            "srsName": "EPSG:4326",
+            "bbox": f"{lon - delta},{lat - delta},{lon + delta},{lat + delta},EPSG:4326",
+        }
+
+        response = requests.get(WFS_URL, params=params, headers=headers, timeout=30)
+        response.raise_for_status()
+
+        data = response.json()
+        features = data.get("features", [])
+
+        if features:
+            break
 
     if not features:
         raise ValueError("Keine Wohnlagen-Daten im WFS für diese Koordinate gefunden.")

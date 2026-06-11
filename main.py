@@ -109,6 +109,7 @@ def main():
         ortsteil_clean = alkis_data["ortsteil_wfs"] or result["suburb"]
 
         district_data = get_district_data(bezirk_clean)
+        print("DEBUG lat/lon:", result["latitude"], result["longitude"])
         wohnlage_data = get_wohnlage_from_wfs(result["latitude"], result["longitude"])
         mss_data = get_mss_data_from_wfs(result["latitude"], result["longitude"])
         milieuschutz_data = get_milieuschutz_data(result["latitude"], result["longitude"])

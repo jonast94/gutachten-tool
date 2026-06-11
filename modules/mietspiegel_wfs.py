@@ -2,8 +2,8 @@ import math
 import requests
 
 
-WFS_URL = "https://gdi.berlin.de/services/wfs/wohnlagenadr2024"
-WFS_TYPENAME = "wohnlagenadr2024:wohnlagenadr2024"
+WFS_URL = "https://gdi.berlin.de/services/wfs/wohnlagenadr2026"
+WFS_TYPENAME = "wohnlagenadr2026:wohnlagenadr2026"
 
 
 def _normalize_key(value: str) -> str:

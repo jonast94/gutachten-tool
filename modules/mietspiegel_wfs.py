@@ -108,7 +108,7 @@ def get_wohnlage_from_wfs(latitude: str, longitude: str) -> dict:
     lon = float(longitude)
 
     # kleine Suchbox um den Punkt
-    delta = 0.0003  # ca. wenige Dutzend Meter in Berlin
+    delta = 0.0008  # ca. wenige Dutzend Meter in Berlin
 
     params = {
         "service": "WFS",
